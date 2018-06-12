@@ -1,0 +1,5 @@
+[http]
+	sslVerify = false
+[core]
+	autocrlf = input
+	safecrlf = true
