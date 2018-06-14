@@ -5,19 +5,9 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-if [ "$(uname)" = 'Darwin' ]; then
-    alias ls='ls -G'
-else
-    alias ls='ls --color=auto'
-    alias pacman=' sudo pacman'
+if [ -f "${HOME}/.commonshrc" ] ; then
+    source "${HOME}/.commonshrc"
 fi
-alias ll='ls -lah'
-alias vi='vim'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias mv='mv -i'
-alias cp='cp -i'
-alias rm='rm -i'
 
 PS1='[\t]\e[36m\]\u@\h\e[0m\]:\e[32m\]\w\e[0m\]\n\$ '
 # Git repository check
