@@ -25,8 +25,13 @@ for f in .??*
 do
   [[ ${f} = ".git" ]] && continue
   [[ ${f} = ".gitignore" ]] && continue
-  [[ ${f#*.} = "sh" ]]&& continue
+  [[ ${f} = ".config" ]]&& continue
   ln -snfv ${DOT_DIRECTORY}/${f} ${HOME}/${f}
+done
+cd ${DOT_DIRECTORY}/.config
+for f in `\find . -maxdepth 8 -type f`
+do
+  ln -snfv ${DOT_DIRECTORY}/.config/${f:2} ${HOME}/.config/${f:2}
 done
 echo $(tput setaf 2)Deploy dotfiles complete!. ✔︎$(tput sgr0)
 
