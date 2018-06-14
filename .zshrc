@@ -4,7 +4,16 @@ compinit
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
+# プロセスを横断してヒストリを共有
+setopt inc_append_hisotry
+# ヒストリの共有の有効化
+setopt share_history
+# 直前と同じコマンドをヒストリに追加しない
+setopt hist_ignore_dups
+# ヒストリに追加されるコマンドが古いものと同じなら古いものを削除
+setopt hist_ignore_all_dups
 setopt auto_cd
+setopt auto_pushd
 cdpath=(.. ~ ~/src)
 function chpwd() { ls }
 case "${TERM}" in
