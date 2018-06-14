@@ -8,8 +8,14 @@
 if [ -f "${HOME}/.commonshrc" ] ; then
     source "${HOME}/.commonshrc"
 fi
+shopt -s autocd
 
-PS1='[\t]\e[36m\]\u@\h\e[0m\]:\e[32m\]\w\e[0m\]\n\$ '
+if [ ${EUID:-${UID}} = 0 ]; then
+    bash_color="\e[31m" 
+else
+    bash_color="\e[36m"
+fi
+PS1="[\t]${bash_color}\]\u@\h\e[0m\]:\e[32m\]\w\e[0m\]\n\\$ "
 # Git repository check
 function check_git {
     if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = 'true' ]; then
