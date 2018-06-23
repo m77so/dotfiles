@@ -3,3 +3,6 @@
 [core]
 	autocrlf = input
 	safecrlf = true
+[user]
+	name = m77so
+	email = m77code@gmail.com

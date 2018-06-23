@@ -16,12 +16,12 @@ fi
 
 # INITIALIZE
 install_mac() {
-  :
+  brew install coreutils fish zsh 
 }
 
 install_linux() {
   if [[ `uname -r` =~ ARCH$ ]]; then
-    sudo pacman -S --noconfirm bash fish zsh jq git vim nodejs python-pip yarn tmux
+    sudo pacman -S --noconfirm bash fish zsh jq git vim nodejs python-pip yarn tmux coreutils
   fi
 }
 
@@ -32,3 +32,6 @@ elif [[ $OS = "Linux" ]]; then
 fi
 
 pip install glances
+
+# anyenv
+git clone https://github.com/riywo/anyenv ~/.anyenv
