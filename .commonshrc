@@ -21,4 +21,4 @@ if [ -d ${HOME}/.anyenv ] ; then
         export PATH="$HOME/.anyenv/envs/$D/shims:$PATH"
     done
 fi
-export PATH=$PATH:"/Users/sk/.nimvm/bin"
+export PATH=$PATH:"$HOME/.nimvm/bin:$HOME/.app/bin"
