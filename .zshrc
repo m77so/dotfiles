@@ -31,6 +31,7 @@ setopt print_eight_bit
 if [ -f "${HOME}/.commonshrc" ] ; then
     source "${HOME}/.commonshrc"
 fi
+
 COLOR_F034="%{[38;5;034m%}"
 COLOR_END="%{[0m%}"
 PROMPT="[%*] ${COLOR_F034}%n@%m${COLOR_END}:%~
