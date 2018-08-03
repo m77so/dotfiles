@@ -11,3 +11,17 @@ alias ...='cd ../..'
 alias mv='mv -i'
 alias cp='cp -i'
 alias rm='rm -i'
+<<<<<<< HEAD
+=======
+
+
+if [ -d ${HOME}/.anyenv ] ; then
+    export PATH="$HOME/.anyenv/bin:$PATH"
+    eval "$(anyenv init -)"
+  for D in `ls $HOME/.anyenv/envs`
+    do
+        export PATH="$HOME/.anyenv/envs/$D/shims:$PATH"
+    done
+fi
+export PATH=$PATH:"$HOME/.nimvm/bin:$HOME/.app/bin"
+>>>>>>> ccabfbac36073c9a5a2c87fba117d10f99fbcab2

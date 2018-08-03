@@ -5,3 +5,6 @@
 	safecrlf = true
 [push]
 	default = current
+[user]
+	name = m77so
+	email = m77code@gmail.com
