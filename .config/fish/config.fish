@@ -51,3 +51,6 @@ egrep "^export " ~/.profile | while read e
 	#echo "set -xg '$var' '$value' (via '$e')"
 	set -xg $var $value
 end
+
+set -x PATH $HOME/.pyenv/bin $PATH
+. (pyenv init - | psub)
