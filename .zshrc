@@ -35,7 +35,8 @@ zplug "junegunn/fzf-bin", \
     rename-to:"fzf", \
     from:gh-r, \
     on: zplug "b4b4r07/enhancd", of:enhancd.sh
-
+# 薄く出すやつ
+zplug "zsh-users/zsh-autosuggestions", defer:2  
 if ! zplug check; then
 	zplug install
 fi
