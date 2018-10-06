@@ -30,6 +30,8 @@ if [[ $OS = 'Mac' ]]; then
 elif [[ $OS = "Linux" ]]; then
   install_linux
 fi
+#zplug
+curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh| zsh
 
 pip install glances
 
