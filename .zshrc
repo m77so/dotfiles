@@ -22,19 +22,21 @@ cdpath=(.. ~ ~/src)
 
 autoload -Uz colors
 colors
+if [ -f "${HOME}/.commonshrc" ] ; then
+    source "${HOME}/.commonshrc"
+fi
 
+function chpwd() { ls }
 # zplug
 source ~/.zplug/init.zsh
 # ないコマンドで赤くなるやつ
 zplug "zsh-users/zsh-syntax-highlighting"
 # めちゃくちゃ補完候補増やすやつ
 zplug "zsh-users/zsh-completions"
-# 移動するやつ
-zplug "junegunn/fzf-bin", \
-    as:command, \
-    rename-to:"fzf", \
-    from:gh-r, \
-    on: zplug "b4b4r07/enhancd", of:enhancd.sh
+# git の補完を効かせる
+# 補完＆エイリアスが追加される
+zplug "plugins/git",   from:oh-my-zsh
+zplug "peterhurford/git-aliases.zsh"
 # 薄く出すやつ
 zplug "zsh-users/zsh-autosuggestions", defer:2  
 if ! zplug check; then
@@ -44,14 +46,11 @@ fi
 zplug load --verbose
 
 
-if [ -f "${HOME}/.commonshrc" ] ; then
-    source "${HOME}/.commonshrc"
-fi
 
-function chpwd() { ls }
+
 setopt promptsubst
 
-PROMPT="[%*]%F{039}%n@%m%f %F{083}%d
+PROMPT="[%*]%F{039}%n@%m%f:%F{083}%d%f
 %(?|%F{076}|%F{009})%(?!(*'-') !(%?;-;%) )%#%f " 
 setopt correct
 SPROMPT="%{%F{220}%}%{$suggest%}(._.%)? %B %r is correct? [n,y,a,e]:%f%}%b "
