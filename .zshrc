@@ -56,3 +56,13 @@ PROMPT="[%*]%F{039}%n@%m%f %F{083}%d
 setopt correct
 SPROMPT="%{%F{220}%}%{$suggest%}(._.%)? %B %r is correct? [n,y,a,e]:%f%}%b "
 
+
+# history pecoで検索
+function peco-history-selection() {
+    BUFFER=`history -n 1 | perl -e 'print reverse <>' | awk '!a[$0]++' | peco`
+    CURSOR=$#BUFFER
+    zle reset-prompt
+}
+
+zle -N peco-history-selection
+bindkey '^R' peco-history-selection
