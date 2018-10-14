@@ -16,13 +16,15 @@ fi
 
 # INITIALIZE
 install_mac() {
-  brew install coreutils fish zsh 
+  brew install coreutils fish zsh peco 
 }
 
 install_linux() {
   if [[ `uname -r` =~ ARCH$ ]]; then
-    sudo pacman -S --noconfirm bash fish zsh jq git vim nodejs python-pip yarn tmux coreutils
-  fi
+    sudo pacman -S --noconfirm bash fish zsh git vim peco tmux coreutils
+  elif [[ `cat /etc/system-release` =~ ^Amazon ]]; then
+    sudo yum -y install bash zsh git peco tmux
+  fi  
 }
 
 if [[ $OS = 'Mac' ]]; then
@@ -35,5 +37,3 @@ curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/instal
 
 pip install glances
 
-# anyenv
-git clone https://github.com/riywo/anyenv ~/.anyenv
