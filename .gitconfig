@@ -1,7 +1,7 @@
 [http]
 	sslVerify = false
 [core]
-	autocrlf = input
+	autocrlf = false
 	safecrlf = true
 [push]
 	default = current
