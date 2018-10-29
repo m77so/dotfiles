@@ -11,8 +11,6 @@ alias ...='cd ../..'
 alias mv='mv -i'
 alias cp='cp -i'
 alias rm='rm -i'
-<<<<<<< HEAD
-=======
 
 
 if [ -d ${HOME}/.anyenv ] ; then
@@ -24,4 +22,3 @@ if [ -d ${HOME}/.anyenv ] ; then
     done
 fi
 export PATH=$PATH:"$HOME/.nimvm/bin:$HOME/.app/bin"
->>>>>>> ccabfbac36073c9a5a2c87fba117d10f99fbcab2
