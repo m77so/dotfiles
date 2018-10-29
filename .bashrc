@@ -26,7 +26,7 @@ function check_git {
 # cd -> cd + ls
 function autols {
     if [ "${AUTOLS_DIR:-$PWD}" != "$PWD" ]; then
-        ls -ACF
+        ls -CF
         check_git
     fi
     AUTOLS_DIR="${PWD}"
