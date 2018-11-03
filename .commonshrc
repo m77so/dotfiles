@@ -10,4 +10,4 @@ alias vi='vim'
 alias ..='cd ..'
 alias ...='cd ../..'
 
-export PATH=$PATH:"$HOME/.nimvm/bin:$HOME/.app/bin"
+export PATH=$PATH:"$HOME/.nimble/bin:$HOME/.nimvm/bin:$HOME/.app/bin"
