@@ -55,6 +55,37 @@ PROMPT="[%*]%F{039}%n@%m%f:%F{083}%d%f
 setopt correct
 SPROMPT="%{%F{220}%}%{$suggest%}(._.%)? %B %r is correct? [n,y,a,e]:%f%}%b "
 
+# orebibou.com
+# 時刻を更新するやつ
+TMOUT=1
+TRAPALRM() {
+    if [ "$WIDGET" != "expand-or-complete" ]; then
+        zle reset-prompt
+    fi
+}
+
+# コマンドの開始終了時刻表示するやつ
+# http://auewe.hatenablog.com/entry/2017/07/02/145735 より
+export PREV_COMMAND_END_TIME
+export NEXT_COMMAND_BGN_TIME
+
+function show_command_end_time() {
+  PREV_COMMAND_END_TIME=`date "+%H:%M:%S"`
+  RPROMPT="${PREV_COMMAND_END_TIME} -         "
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd show_command_end_time
+
+show_command_begin_time() {
+  NEXT_COMMAND_BGN_TIME=`date "+%H:%M:%S"`
+  RPROMPT="${PREV_COMMAND_END_TIME} - ${NEXT_COMMAND_BGN_TIME}"
+  zle .accept-line
+  zle .reset-prompt
+}
+zle -N accept-line show_command_begin_time
+
+
+
 
 # history pecoで検索
 function peco-history-selection() {
