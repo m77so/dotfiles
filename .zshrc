@@ -1,5 +1,6 @@
 
 autoload -U compinit promptinit
+autoload -Uz vcs_info
 compinit
 promptinit
 
@@ -68,24 +69,6 @@ fi
 zplug load --verbose
 
 
-
-
-setopt promptsubst
-
-PROMPT="[%*]%F{039}%n@%m%f:%F{083}%d%f
-%(?|%F{076}|%F{009})%(?!(z'-') !(%?;-;%) )%#%f " 
-setopt correct
-SPROMPT="%{%F{220}%}%{$suggest%}(._.%)? %B %r is correct? [n,y,a,e]:%f%}%b "
-
-# orebibou.com
-# 時刻を更新するやつ
-TMOUT=1
-TRAPALRM() {
-    if test "$WIDGET" != "expand-or-complete" -a "$WIDGET" != "peco-history-selection"; then
-        zle reset-prompt
-    fi
-}
-
 # コマンドの開始終了時刻表示するやつ
 # http://auewe.hatenablog.com/entry/2017/07/02/145735 より
 export PREV_COMMAND_END_TIME
@@ -93,20 +76,48 @@ export NEXT_COMMAND_BGN_TIME
 
 function show_command_end_time() {
   PREV_COMMAND_END_TIME=`date "+%H:%M:%S"`
-  RPROMPT="${PREV_COMMAND_END_TIME} -         "
 }
+
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd show_command_end_time
+add-zsh-hook precmd vcs_info
+zstyle ':vcs_info:*' max-exports 7
 
-show_command_begin_time() {
-  NEXT_COMMAND_BGN_TIME=`date "+%H:%M:%S"`
-  RPROMPT="${PREV_COMMAND_END_TIME} - ${NEXT_COMMAND_BGN_TIME}"
-  zle .accept-line
-  zle .reset-prompt
+zstyle ':vcs_info:*' formats '%R' '%S' '%b' '%s'
+
+prompt_refresh(){
+NEXT_COMMAND_BGN_TIME=`date "+%H:%M:%S"`
+PROMPT=" ${NEXT_COMMAND_BGN_TIME}]%(?|%F{076}|%F{009})%(?!(z'-') !(%?;-;%) )%#%f " 
 }
-zle -N accept-line show_command_begin_time
+print_above_prompt(){
+    if [[ -z ${vcs_info_msg_0_} ]]; then
+        print -P "[${PREV_COMMAND_END_TIME},%F{039}%n@%m%f:%F{083}%d%f"
+    else
+        if [[ "$vcs_info_msg_1_" == "." ]];then
+          vcs_info_msg_1_=""
+        else
+          vcs_info_msg_1_="/$vcs_info_msg_1_"
+        fi
+        print -P "[${PREV_COMMAND_END_TIME},%F{039}%n@%m%f:%F{083}${vcs_info_msg_0_}%f${vcs_info_msg_1_}:${vcs_info_msg_2_}:${vcs_info_msg_3_}"
 
+    fi
+}
+add-zsh-hook precmd print_above_prompt
 
+setopt promptsubst
+
+setopt correct
+SPROMPT="%{%F{220}%}%{$suggest%}(._.%)? %B %r is correct? [n,y,a,e]:%f%}%b "
+prompt_refresh
+# orebibou.com
+# 時刻を更新するやつ
+TMOUT=1
+TRAPALRM() {
+    if test "$WIDGET" != "expand-or-complete" -a "$WIDGET" != "peco-history-selection"; then
+        prompt_refresh
+        zle reset-prompt
+    fi
+}
 
 
 # history pecoで検索
