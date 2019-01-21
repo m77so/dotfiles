@@ -3,9 +3,31 @@ autoload -U compinit promptinit
 compinit
 promptinit
 
-zstyle ':completion:*' menu select
-setopt completealiases
+# 補完に関する設定
+zstyle ':completion:*' menu select=2 interactive
+setopt menu_complete
 
+zmodload zsh/complist
+# 次の補完メニューを表示する
+bindkey -M menuselect '^k' accept-and-infer-next-history  
+
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*' format '%B%d%b'
+zstyle ':completion:*:warnings' format 'No matches for: %d'
+zstyle ':completion:*' group-name ''
+# https://gihyo.jp/dev/serial/01/zsh-book/0005
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
+
+# cdr, add-zsh-hook を有効にする
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+ 
+# cdr の設定
+zstyle ':completion:*' recent-dirs-insert both
+zstyle ':chpwd:*' recent-dirs-max 500
+zstyle ':chpwd:*' recent-dirs-default true
+zstyle ':chpwd:*' recent-dirs-pushd true
+# ヒストリに関する設定
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
@@ -51,7 +73,7 @@ zplug load --verbose
 setopt promptsubst
 
 PROMPT="[%*]%F{039}%n@%m%f:%F{083}%d%f
-%(?|%F{076}|%F{009})%(?!(*'-') !(%?;-;%) )%#%f " 
+%(?|%F{076}|%F{009})%(?!(z'-') !(%?;-;%) )%#%f " 
 setopt correct
 SPROMPT="%{%F{220}%}%{$suggest%}(._.%)? %B %r is correct? [n,y,a,e]:%f%}%b "
 
@@ -59,7 +81,7 @@ SPROMPT="%{%F{220}%}%{$suggest%}(._.%)? %B %r is correct? [n,y,a,e]:%f%}%b "
 # 時刻を更新するやつ
 TMOUT=1
 TRAPALRM() {
-    if [ "$WIDGET" != "expand-or-complete" ]; then
+    if test "$WIDGET" != "expand-or-complete" -a "$WIDGET" != "peco-history-selection"; then
         zle reset-prompt
     fi
 }
@@ -96,5 +118,6 @@ function peco-history-selection() {
 
 zle -N peco-history-selection
 bindkey '^R' peco-history-selection
+
 
 source ~/.profile
