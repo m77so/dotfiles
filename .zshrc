@@ -103,7 +103,7 @@ print_above_prompt(){
         else
           vcs_info_msg_1_="/$vcs_info_msg_1_"
         fi
-        prompt+="${vcs_info_msg_0_}%f${vcs_info_msg_1_} [${vcs_info_msg_2_}]"
+        prompt+="${vcs_info_msg_0_}%f%F{154}${vcs_info_msg_1_}%f [${vcs_info_msg_2_}]"
         [[ -n ${vcs_info_msg_4_} ]] && prompt+="%F{221}${vcs_info_msg_4_}%f"
         [[ -n ${vcs_info_msg_5_} ]] && prompt+="%F{161}${vcs_info_msg_5_}%f"
         prompt+="(${vcs_info_msg_3_})"
