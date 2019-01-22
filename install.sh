@@ -52,5 +52,5 @@ fi
 #zplug
 curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh| zsh
 
-sudo pip install glances
+sudo pip3 install glances
 
