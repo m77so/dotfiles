@@ -82,25 +82,34 @@ autoload -Uz add-zsh-hook
 add-zsh-hook precmd show_command_end_time
 add-zsh-hook precmd vcs_info
 zstyle ':vcs_info:*' max-exports 7
-
-zstyle ':vcs_info:*' formats '%R' '%S' '%b' '%s'
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:git:*' stagedstr "+"    # %c で表示する文字列
+zstyle ':vcs_info:git:*' unstagedstr "-"  # %u で表示する文字列
+zstyle ':vcs_info:*' formats '%R' '%S' '%b' '%s' '%c%u %m' 
+zstyle ':vcs_info:*' actionformats '%R' '%S' '%b' '%s' '%c%u %m' '<!%a>'
 
 prompt_refresh(){
 NEXT_COMMAND_BGN_TIME=`date "+%H:%M:%S"`
-PROMPT=" ${NEXT_COMMAND_BGN_TIME}]%(?|%F{076}|%F{009})%(?!(z'-') !(%?;-;%) )%#%f " 
+PROMPT=" ${NEXT_COMMAND_BGN_TIME}]%(?|%F{076}|%F{009})%(?!(z ╹ヮ╹) !(%? ◞‸◟%) )%#%f " 
 }
 print_above_prompt(){
+    local  prompt
+    prompt="[${PREV_COMMAND_END_TIME} %F{039}%n@%m%f:%F{010}"
     if [[ -z ${vcs_info_msg_0_} ]]; then
-        print -P "[${PREV_COMMAND_END_TIME},%F{039}%n@%m%f:%F{083}%d%f"
+        prompt+="%d%f"
     else
         if [[ "$vcs_info_msg_1_" == "." ]];then
           vcs_info_msg_1_=""
         else
           vcs_info_msg_1_="/$vcs_info_msg_1_"
         fi
-        print -P "[${PREV_COMMAND_END_TIME},%F{039}%n@%m%f:%F{083}${vcs_info_msg_0_}%f${vcs_info_msg_1_}:${vcs_info_msg_2_}:${vcs_info_msg_3_}"
-
+        prompt+="${vcs_info_msg_0_}%f${vcs_info_msg_1_} [${vcs_info_msg_2_}]"
+        [[ -n ${vcs_info_msg_4_} ]] && prompt+="%F{221}${vcs_info_msg_4_}%f"
+        [[ -n ${vcs_info_msg_5_} ]] && prompt+="%F{161}${vcs_info_msg_5_}%f"
+        prompt+="(${vcs_info_msg_3_})"
+       
     fi
+    print -P $prompt
 }
 add-zsh-hook precmd print_above_prompt
 
