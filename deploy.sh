@@ -1,7 +1,7 @@
 #!/bin/bash
 DOT_DIRECTORY="${HOME}/dotfiles"
 DOT_TARBALL="https://github.com/m77so/dotfiles/tarball/master"
-REMOTE_URL="git@github.com:m77so/dotfiles.git"
+REMOTE_URL="https://github.com/m77so/dotfiles.git"
 
 # DOWNLOAD
 if [ ! -d ${DOT_DIRECTORY} ]; then
