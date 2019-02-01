@@ -1,0 +1,20 @@
+{
+    "latex-workshop.latex.tools": [
+    {
+        "command": "latexmk",
+        "args": [
+            "%DOC%"
+        ],
+        "name": "latexmk build"
+    }
+    ],
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "latexmk",
+            "tools": [
+                "latexmk build"
+            ]
+        }
+    ],
+    "editor.fontWeight": "300"
+}
