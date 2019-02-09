@@ -69,6 +69,8 @@ fi
 zplug load --verbose
 
 
+
+
 # コマンドの開始終了時刻表示するやつ
 # http://auewe.hatenablog.com/entry/2017/07/02/145735 より
 export PREV_COMMAND_END_TIME
@@ -93,8 +95,17 @@ NEXT_COMMAND_BGN_TIME=`date "+%H:%M:%S"`
 PROMPT=" ${NEXT_COMMAND_BGN_TIME}]%(?|%F{076}|%F{009})%(?!(z ╹ヮ╹) !(%? ◞‸◟%) )%#%f " 
 }
 print_above_prompt(){
+    # Pyenv https://blog.shibayu36.org/entry/2017/04/01/145758
+    #local PYTHON_VERSION_STRING
+    local PYTHON_VIRTUAL_ENV_STRING
+    #PYTHON_VERSION_STRING="py:"$(pyenv version-name)
+    PYTHON_VIRTUAL_ENV_STRING=""
+    if [ -n "$VIRTUAL_ENV" ]; then
+        PYTHON_VIRTUAL_ENV_STRING="(`basename \"$VIRTUAL_ENV\"`)"
+    fi
+
     local  prompt
-    prompt="[${PREV_COMMAND_END_TIME} %F{039}%n@%m%f:%F{010}"
+    prompt="[${PREV_COMMAND_END_TIME} %F{039}%n@%m%f:$PYTHON_VIRTUAL_ENV_STRING%F{010}"
     if [[ -z ${vcs_info_msg_0_} ]]; then
         prompt+="%d%f"
     else
