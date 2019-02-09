@@ -5,7 +5,7 @@ compinit
 promptinit
 
 # 補完に関する設定
-zstyle ':completion:*' menu select=2 interactive
+zstyle ':completion:*' menu select=2 #interactive
 setopt menu_complete
 
 zmodload zsh/complist
@@ -19,15 +19,15 @@ zstyle ':completion:*' group-name ''
 # https://gihyo.jp/dev/serial/01/zsh-book/0005
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
 
-# cdr, add-zsh-hook を有効にする
-autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
-add-zsh-hook chpwd chpwd_recent_dirs
+# # cdr, add-zsh-hook を有効にする
+# autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+# add-zsh-hook chpwd chpwd_recent_dirs
  
-# cdr の設定
-zstyle ':completion:*' recent-dirs-insert both
-zstyle ':chpwd:*' recent-dirs-max 500
-zstyle ':chpwd:*' recent-dirs-default true
-zstyle ':chpwd:*' recent-dirs-pushd true
+# # cdr の設定
+# zstyle ':completion:*' recent-dirs-insert both
+# zstyle ':chpwd:*' recent-dirs-max 500
+# zstyle ':chpwd:*' recent-dirs-default true
+# zstyle ':chpwd:*' recent-dirs-pushd true
 # ヒストリに関する設定
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
