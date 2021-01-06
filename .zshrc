@@ -8,27 +8,6 @@ promptinit
 zstyle ':completion:*' menu select=2 #interactive
 setopt menu_complete
 
-zmodload zsh/complist
-# 次の補完メニューを表示する
-bindkey -M menuselect '^k' accept-and-infer-next-history  
-
-zstyle ':completion:*' verbose yes
-zstyle ':completion:*' format '%B%d%b'
-zstyle ':completion:*:warnings' format 'No matches for: %d'
-zstyle ':completion:*' group-name ''
-# https://gihyo.jp/dev/serial/01/zsh-book/0005
-zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
-
-# # cdr, add-zsh-hook を有効にする
-# autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
-# add-zsh-hook chpwd chpwd_recent_dirs
- 
-# # cdr の設定
-# zstyle ':completion:*' recent-dirs-insert both
-# zstyle ':chpwd:*' recent-dirs-max 500
-# zstyle ':chpwd:*' recent-dirs-default true
-# zstyle ':chpwd:*' recent-dirs-pushd true
-# ヒストリに関する設定
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
@@ -45,17 +24,16 @@ cdpath=(.. ~ ~/src)
 
 autoload -Uz colors
 colors
-if [ -f "${HOME}/.commonshrc" ] ; then
-    source "${HOME}/.commonshrc"
+if [ -f "${HOME}/.common_profile" ] ; then
+    source "${HOME}/.common_profile"
 fi
 
 function chpwd() { ls }
 # zplug
-source ~/.zplug/init.zsh
+export ZPLUG_HOME=/usr/local/opt/zplug
+source $ZPLUG_HOME/init.zsh
 # ないコマンドで赤くなるやつ
 zplug "zsh-users/zsh-syntax-highlighting"
-# めちゃくちゃ補完候補増やすやつ
-zplug "zsh-users/zsh-completions"
 # git の補完を効かせる
 # 補完＆エイリアスが追加される
 zplug "plugins/git",   from:oh-my-zsh
@@ -150,5 +128,4 @@ function peco-history-selection() {
 zle -N peco-history-selection
 bindkey '^R' peco-history-selection
 
-
-source ~/.profile
+. /usr/local/opt/asdf/asdf.sh

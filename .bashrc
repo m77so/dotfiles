@@ -5,8 +5,8 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-if [ -f "${HOME}/.commonshrc" ] ; then
-    source "${HOME}/.commonshrc"
+if [ -f "${HOME}/.common_profile" ] ; then
+    source "${HOME}/.common_profile"
 fi
 shopt -s autocd
 
@@ -23,15 +23,6 @@ function check_git {
         git status -sb
     fi
 }
-# cd -> cd + ls
-function autols {
-    if [ "${AUTOLS_DIR:-$PWD}" != "$PWD" ]; then
-        ls -CF
-        check_git
-    fi
-    AUTOLS_DIR="${PWD}"
-}
-export PROMPT_COMMAND_AUTOLS="autols"
 
 # Enter -> ls + git status
 export HISTCONTROL=ignorespace
@@ -49,6 +40,13 @@ function lsgit {
 }
 export PROMPT_COMMAND_LSGIT="lsgit"
 
+peco-select-history() {
+    declare l=$(HISTTIMEFORMAT= history | sort -k1,1nr | perl -ne 'BEGIN { my @lines = (); } s/^\s*\d+\s*//; $in=$_; if (!(grep {$in eq $_} @lines)) { push(@lines, $in); print $in; }' | peco --query "$READLINE_LINE")
+    READLINE_LINE="$l"
+    READLINE_POINT=${#l}
+}
+bind -x '"\C-r": peco-select-history'
+
 dispatch () {
         export EXIT_STATUS="$?" 
 
@@ -59,3 +57,8 @@ dispatch () {
         unset f
 }
 export PROMPT_COMMAND="dispatch"
+
+HISTSIZE=10000
+HISTFILESIZE=10000
+
+. /usr/local/opt/asdf/asdf.sh
