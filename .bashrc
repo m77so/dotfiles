@@ -57,5 +57,7 @@ dispatch () {
             eval "${!f}" 
         done
         unset f
+        history -a;
+        echo "$(date "+%Y-%m-%d %H:%M:%S") [$(/bin/pwd)] $(history 1)" >> ~/.history_with_dir';
 }
 export PROMPT_COMMAND="dispatch"
